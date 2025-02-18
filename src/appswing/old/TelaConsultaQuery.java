@@ -4,7 +4,7 @@
  * Prof. Fausto Ayres
  *
  */
-package appswing;
+package appswing.old;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -29,7 +29,7 @@ import javax.swing.table.DefaultTableModel;
 
 import modelo.Consulta;
 import modelo.Paciente;
-import regras_negocio.Fachada;
+import regras_negocio.old.Fachada;
 
 public class TelaConsultaQuery {
 	private JDialog frame;

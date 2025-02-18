@@ -4,7 +4,7 @@
  * Prof. Fausto Maranh�o Ayres
  **********************************/
 
-package appswing;
+package appswing.old;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -14,7 +14,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-
+//import java.util.ArrayList;
+//import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -31,11 +32,12 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 import modelo.Consulta;
+//import modelo.Aluno;
+//import modelo.Telefone;
+import modelo.Paciente;
+import regras_negocio.old.Fachada;
 
-import regras_negocio.Fachada;
-
-
-public class TelaConsulta {
+public class TelaPaciente {
 	private JDialog frame;
 	private JTable table;
 	private JScrollPane scrollPane;
@@ -53,17 +55,13 @@ public class TelaConsulta {
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
-	private JTextField textField_3;
-	private JLabel label_1;
-	private JLabel label_5;
-	private JTextField textField_4;
 	//private JTextField textField_4;
 
 
 	/**
 	 * Create the application.
 	 */
-	public TelaConsulta() {
+	public TelaPaciente() {
 		initialize();
 	}
 
@@ -86,7 +84,7 @@ public class TelaConsulta {
 				frame.dispose();
 			}
 		});
-		frame.setTitle("consultas");
+		frame.setTitle("Pacientes");
 		frame.setBounds(100, 100, 744, 428);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setResizable(false);
@@ -103,19 +101,16 @@ public class TelaConsulta {
 			public void mouseClicked(MouseEvent e) {
 				try {
 					if (table.getSelectedRow() >= 0) {
-						// pegar a data, paciente, medico e tipo da consulta selecionada
-						int id = (int) table.getValueAt(table.getSelectedRow(), 0);
-						Consulta c = Fachada.localizarConsulta(id);
-						String data = c.getData().toString();
-						String medico = c.getMedico().getCrm();
-						String paciente = c.getPaciente().getCpf();
-						String tipo = c.getTipo();
-						
-						textField_1.setText(data);
-						textField_2.setText(paciente);
-						textField_3.setText(medico);
-						textField_4.setText(tipo);
-
+						// pegar o nome, cpf e consultas do paciente selecionado
+						String cpf = (String) table.getValueAt(table.getSelectedRow(), 1);
+						Paciente c = Fachada.localizarPaciente(cpf);
+						String nome = c.getNome();
+						//String consulta = c.getConsultas()+"";
+						textField_1.setText(nome);
+						textField_2.setText(cpf);
+						//textField_3.setText(String.join(",", c.getConsultas()));
+						//textField_4.setText("");
+						//textField_5.setText(nota);
 						label.setText("");
 					}
 				} catch (Exception erro) {
@@ -140,20 +135,23 @@ public class TelaConsulta {
 
 		button_4 = new JButton("Apagar");
 		button_4.setBounds(169, 340, 74, 23);
-		button_4.setToolTipText("apagar consulta e seus dados");
+		button_4.setToolTipText("apagar paciente e seus dados");
 		button_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					int id = (int) table.getValueAt(table.getSelectedRow(), 0);
-					Consulta c = Fachada.localizarConsulta(id);
-
+					if (textField_2.getText().isEmpty()) {
+						label.setText("cpf vazio");
+						return;
+					}
+					// pegar o nome na linha selecionada
+					String cpf = textField_2.getText();
 					Object[] options = { "Confirmar", "Cancelar" };
 					int escolha = JOptionPane.showOptionDialog(null,
-							"Esta operacao apagara os dados de " + c, "Alerta",
+							"Esta operacao apagara os dados de " + cpf, "Alerta",
 							JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
 					if (escolha == 0) {
-						Fachada.excluirConsulta(c.getId());
-						label.setText("consulta excluida");
+						Fachada.excluirPaciente(cpf);
+						label.setText("paciente excluido");
 						listagem(); // listagem
 					} else
 						label.setText("operacao cancelada");
@@ -171,11 +169,10 @@ public class TelaConsulta {
 		label.setForeground(Color.RED);
 		frame.getContentPane().add(label);
 
-		button = new JButton("Buscar por id");
+		button = new JButton("Buscar por cpf");
 		button.setBounds(175, 27, 149, 23);
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				label.setText("");
 				listagem();
 			}
 		});
@@ -188,11 +185,11 @@ public class TelaConsulta {
 		textField.setColumns(10);
 		frame.getContentPane().add(textField);
 
-		label_2 = new JLabel("selecione um consulta para editar");
+		label_2 = new JLabel("selecione um paciente para editar");
 		label_2.setBounds(21, 216, 394, 14);
 		frame.getContentPane().add(label_2);
 
-		label_3 = new JLabel("data:");
+		label_3 = new JLabel("nome:");
 		label_3.setBounds(31, 239, 62, 14);
 		label_3.setHorizontalAlignment(SwingConstants.LEFT);
 		label_3.setFont(new Font("Tahoma", Font.PLAIN, 11));
@@ -205,7 +202,7 @@ public class TelaConsulta {
 		textField_1.setBackground(Color.WHITE);
 		frame.getContentPane().add(textField_1);
 
-		label_4 = new JLabel("paciente:");
+		label_4 = new JLabel("cpf:");
 		label_4.setBounds(31, 264, 62, 14);
 		label_4.setHorizontalAlignment(SwingConstants.LEFT);
 		label_4.setFont(new Font("Tahoma", Font.PLAIN, 11));
@@ -219,7 +216,7 @@ public class TelaConsulta {
 
 		button_1 = new JButton("Criar");
 		button_1.setBounds(21, 340, 62, 23);
-		button_1.setToolTipText("cadastrar novo consulta");
+		button_1.setToolTipText("cadastrar novo paciente");
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -227,15 +224,17 @@ public class TelaConsulta {
 						label.setText("nome vazio");
 						return;
 					}
-									
-					String data = textField_1.getText().trim();
-					String paciente = textField_2.getText().trim();
-					String medico = textField_3.getText().trim();
-					String tipo = textField_4.getText().trim();
-					
-					Fachada.criarConsulta(data,paciente,medico,tipo);
+					String nome = textField_1.getText().trim();
+					String cpf = textField_2.getText().trim();
+					//String[] apelidos = textField_3.getText().trim().split(",");
+					//double nota = Double.parseDouble(textField_5.getText().trim());
+					Fachada.criarPaciente(cpf, nome);
+//					Fachada.criarAluno(nome, nascimento,new ArrayList<>( Arrays.asList(apelidos)), nota);
+//					String numero = textField_4.getText();
+//					if (!numero.isEmpty())
+//						Fachada.criarTelefone(nome, numero);
 
-					label.setText("consulta criada");
+					label.setText("paciente criado");
 					listagem();
 				} catch (Exception ex) {
 					label.setText(ex.getMessage());
@@ -247,21 +246,25 @@ public class TelaConsulta {
 
 		button_5 = new JButton("Atualizar");
 		button_5.setBounds(82, 340, 87, 23);
-		button_5.setToolTipText("atualizar consulta ");
+		button_5.setToolTipText("atualizar paciente ");
 		button_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					if (textField_2.getText().trim().isEmpty()) {
-						label.setText("crm vazio");
+						label.setText("cpf vazio");
 						return;
 					}
-					int id = (int) table.getValueAt(table.getSelectedRow(), 0);
+					String nome = textField_1.getText();
+					String cpf = textField_2.getText();
+//					String[] apelidos = textField_3.getText().trim().split(",");
+//					double nota = Double.parseDouble(textField_5.getText().trim());
+//					Fachada.alterarAluno(nome, nascimento, new ArrayList<>(Arrays.asList(apelidos)), nota);
+					Fachada.alterarPaciente(cpf, nome);
 
-					String data = textField_1.getText().trim();
-					
-					Fachada.alterarData(id,data);
-
-					label.setText("data da consulta alterada");
+//					String numero = textField_4.getText();
+//					if (!numero.isEmpty())
+//						Fachada.criarTelefone(nome, numero);
+					label.setText("paciente alterado");
 					listagem();
 				} catch (Exception ex2) {
 					label.setText(ex2.getMessage());
@@ -281,38 +284,24 @@ public class TelaConsulta {
 			public void actionPerformed(ActionEvent e) {
 				textField_1.setText("");
 				textField_2.setText("");
-				textField_3.setText("");
-				textField_4.setText("");
+				//textField_3.setText("");
+				//textField_4.setText("");
 				//textField_5.setText("");
 			}
 		});
 		frame.getContentPane().add(button_3);
-		
-		textField_3 = new JTextField();
-		textField_3.setFont(new Font("Dialog", Font.PLAIN, 12));
-		textField_3.setColumns(10);
-		textField_3.setBounds(101, 290, 86, 20);
-		frame.getContentPane().add(textField_3);
-		
-		label_1 = new JLabel("medico:");
-		label_1.setHorizontalAlignment(SwingConstants.LEFT);
-		label_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		label_1.setBounds(31, 294, 46, 14);
-		frame.getContentPane().add(label_1);
-		
-		label_5 = new JLabel("tipo:");
-		label_5.setHorizontalAlignment(SwingConstants.LEFT);
-		label_5.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		label_5.setBounds(210, 294, 46, 14);
-		frame.getContentPane().add(label_5);
-		
-		textField_4 = new JTextField();
-		textField_4.setFont(new Font("Dialog", Font.PLAIN, 12));
-		textField_4.setColumns(10);
-		textField_4.setBounds(238, 291, 86, 20);
-		frame.getContentPane().add(textField_4);
 
+//		label_7 = new JLabel("nova consulta");
+//		label_7.setBounds(21, 295, 74, 14);
+//		label_7.setHorizontalAlignment(SwingConstants.LEFT);
+//		label_7.setFont(new Font("Tahoma", Font.PLAIN, 11));
+//		frame.getContentPane().add(label_7);
 
+//		textField_4 = new JTextField();
+//		textField_4.setBounds(101, 291, 86, 20);
+//		textField_4.setFont(new Font("Dialog", Font.PLAIN, 12));
+//		textField_4.setColumns(10);
+//		frame.getContentPane().add(textField_4);
 
 
 		frame.setVisible(true);
@@ -320,38 +309,39 @@ public class TelaConsulta {
 
 	public void listagem() {
 		try {
-			
+			List<Paciente> lista = Fachada.consultarPacientes(textField.getText());
+
 			// objeto model contem todas as linhas e colunas da tabela
 			DefaultTableModel model = new DefaultTableModel();
 			table.setModel(model);
-			
-			// criar as colunas (0,1,2,3) da tabela			
-			model.addColumn("ID");
-			model.addColumn("Data");
-			model.addColumn("Paciente");
-			model.addColumn("Medico");
-			model.addColumn("Tipo");
 
-			table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS); // desabilita
-			
-			if (!textField.getText().isEmpty()) {
-				Consulta c = Fachada.localizarConsulta(Integer.parseInt(textField.getText()));
-				model.addRow(new Object[] { c.getId(),c.getData(), c.getPaciente(), c.getMedico(),c.getTipo() });
-				return;
-			}
-			
-			List<Consulta> lista = Fachada.listarConsultas();
+			// criar as colunas (0,1,2) da tabela
+			model.addColumn("Nome");
+			model.addColumn("CPF");
+			model.addColumn("Consultas");
+
 
 			// criar as linhas da tabela
-			//String texto2;
-			for (Consulta c : lista) {
-				
+			String texto2;
+			for (Paciente p : lista) {
+				if (p.getConsultas().size() > 0) {
+					texto2 = "";
+					for (Consulta c : p.getConsultas())
+						texto2 += c.getId() + " ";
+				} else
+					texto2 = "sem consultas";
 
-				model.addRow(new Object[] { c.getId(),c.getData(), c.getPaciente(), c.getMedico(),c.getTipo() });
+				model.addRow(new Object[] { p.getNome(), p.getCpf(), texto2});
 
 			}
-			
-			label_2.setText("resultados: " + lista.size() + " consultas   - selecione uma linha para editar");
+			label_2.setText("resultados: " + lista.size() + " pacientes   - selecione uma linha para editar");
+
+			// redimensionar a coluna 3 e 4
+			//table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF); // desabilita
+			//table.getColumnModel().getColumn(3).setMinWidth(200); // coluna das consultas
+			//table.getColumnModel().getColumn(4).setMinWidth(200); // coluna dos telefones
+			table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS); // desabilita
+
 		} catch (Exception erro) {
 			label.setText(erro.getMessage());
 		}

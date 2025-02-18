@@ -4,7 +4,7 @@
  * Prof. Fausto Maranh�o Ayres
  **********************************/
 
-package daodb4o;
+package daodb4o.old;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;

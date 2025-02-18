@@ -1,4 +1,4 @@
-package regras_negocio;
+package regras_negocio.old;
 /**********************************
  * IFPB - SI
  * POB - Persistencia de Objetos
@@ -11,10 +11,10 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-import daodb4o.DAO;
-import daodb4o.DAOConsulta;
-import daodb4o.DAOMedico;
-import daodb4o.DAOPaciente;
+import daodb4o.old.DAO;
+import daodb4o.old.DAOConsulta;
+import daodb4o.old.DAOMedico;
+import daodb4o.old.DAOPaciente;
 import modelo.Consulta;
 import modelo.Medico;
 import modelo.Paciente;

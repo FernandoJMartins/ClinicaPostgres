@@ -4,7 +4,7 @@
  * Prof. Fausto Maranh�o Ayres
  **********************************/
 
-package appswing;
+package appswing.old;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -33,7 +33,7 @@ import javax.swing.table.DefaultTableModel;
 
 
 import modelo.Medico;
-import regras_negocio.Fachada;
+import regras_negocio.old.Fachada;
 
 public class TelaMedico {
 	private JDialog frame;

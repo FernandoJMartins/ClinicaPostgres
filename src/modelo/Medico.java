@@ -1,10 +1,22 @@
 package modelo;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+
+@Entity
 public class Medico {
-	
+	@Id
 	private String crm;
 	private String nome;
 	private String especialidade;
+	
+	@OneToMany(cascade= {CascadeType.PERSIST, CascadeType.MERGE})
+	private List<Consulta> consulta = new ArrayList<>();
 	
 	public Medico(String nome, String crm, String especialidade) {
 		this.nome = nome;

@@ -5,7 +5,7 @@
  *
  */
 
-package daodb4o;
+package daodb4o.old;
 
 import com.db4o.Db4oEmbedded;
 import com.db4o.ObjectContainer;

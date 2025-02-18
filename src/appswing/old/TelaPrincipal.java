@@ -1,4 +1,4 @@
-package appswing;
+package appswing.old;
 /**********************************
  * IFPB - SI
  * POB - Persistencia de Objetos

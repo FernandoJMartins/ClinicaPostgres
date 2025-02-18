@@ -5,7 +5,7 @@ package appconsole;
  * Prof. Fausto Ayres
  **********************************/
 
-import regras_negocio.Fachada;
+import regras_negocio.old.Fachada;
 
 public class Alterar {
 

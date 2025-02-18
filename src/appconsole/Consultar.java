@@ -8,7 +8,7 @@ package appconsole;
 import modelo.Consulta;
 import modelo.Medico;
 import modelo.Paciente;
-import regras_negocio.Fachada;
+import regras_negocio.old.Fachada;
 
 public class Consultar {
 
