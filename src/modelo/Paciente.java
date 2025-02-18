@@ -18,6 +18,16 @@ public class Paciente {
 	@OneToMany(cascade= {CascadeType.PERSIST, CascadeType.MERGE})
 	private ArrayList<Consulta> consultas = new ArrayList<>();
 	
+	
+	public void adicionarConsulta(Consulta c){
+		consultas.add(c);
+	}
+	public void removerLivro(Consulta c){
+		consultas.remove(c);
+	}
+	
+	
+	
 	public Paciente(String cpf, String nome) {
 		this.cpf = cpf;
 		this.nome = nome;

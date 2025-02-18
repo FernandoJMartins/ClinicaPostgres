@@ -29,8 +29,42 @@ public class Consulta {
 	public List<Medico> medicos = new ArrayList<>();
 	
 	@OneToOne(mappedBy = "consulta", cascade= {CascadeType.PERSIST, CascadeType.MERGE})
-	public List<Paciente> alunos = new ArrayList<>();
+	public List<Paciente> pacientes = new ArrayList<>();
 	
+	
+	public void adicionarMedico(Medico m) {
+		medicos.add(m);
+	}
+	
+	public void adicionarPaciente(Paciente p) {
+		pacientes.add(p);
+	}
+	
+	public void removerMedico(Medico m) {
+		medicos.remove(m);
+	}
+	
+	public void removerPaciente(Paciente p) {
+		pacientes.remove(p);
+	}
+	
+	public List<Paciente> getPaciente(){
+		return pacientes;
+	}
+	
+	public List<Medico> getMedico(){
+		return medicos;
+	}
+	
+	
+	
+	public void setMedico(Medico medico) {
+		this.medico = medico;
+	}
+
+	public void setPaciente(Paciente paciente) {
+		this.paciente = paciente;
+	}
 	
 	
 	
@@ -56,21 +90,7 @@ public class Consulta {
 		this.data = data;
 	}
 
-	public Medico getMedico() {
-		return medico;
-	}
 
-	public void setMedico(Medico medico) {
-		this.medico = medico;
-	}
-
-	public Paciente getPaciente() {
-		return paciente;
-	}
-
-	public void setPaciente(Paciente paciente) {
-		this.paciente = paciente;
-	}
 
 	public String getTipo() {
 		return tipo;
