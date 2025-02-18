@@ -19,6 +19,8 @@ public class Cadastrar {
 
 			System.out.println("Cadastrando...");
 //			Autor joao, maria, jose, paulo;
+			
+			// 3 de CADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUAUUAUAUA
 			Paciente paciente1;
 			Medico medico1, medico2;
 			Consulta consulta1, consulta2;

@@ -1,6 +1,5 @@
 package modelo;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -8,7 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;;
+import jakarta.persistence.ManyToOne;;
 
 @Entity
 public class Consulta {
@@ -16,8 +15,6 @@ public class Consulta {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String data;
-	private Paciente paciente;
-	private Medico medico;
 	private String tipo;
 	
 	public Consulta(String data, String tipo) {
@@ -25,35 +22,35 @@ public class Consulta {
 		this.tipo = tipo;
 	}
 	
-	@ManyToMany(mappedBy = "consultas", cascade= {CascadeType.PERSIST, CascadeType.MERGE})
-	public List<Medico> medicos = new ArrayList<>();
+	@ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE})
+	public Medico medico;
 	
-	@ManyToMany(mappedBy = "consultas", cascade= {CascadeType.PERSIST, CascadeType.MERGE})
-	public List<Paciente> pacientes = new ArrayList<>();
+	@ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE})
+	public Paciente paciente;
 	
 	
 	public void adicionarMedico(Medico m) {
-		medicos.add(m);
+		Medico medico = m;
 	}
 	
 	public void adicionarPaciente(Paciente p) {
-		pacientes.add(p);
+		Paciente paciente = p;
 	}
 	
 	public void removerMedico(Medico m) {
-		medicos.remove(m);
+		Medico medico = null;
 	}
 	
 	public void removerPaciente(Paciente p) {
-		pacientes.remove(p);
+		Paciente paciente = null;
 	}
 	
-	public List<Paciente> getPaciente(){
-		return pacientes;
+	public Paciente getPaciente(){
+		return paciente;
 	}
 	
-	public List<Medico> getMedico(){
-		return medicos;
+	public Medico getMedico(){
+		return medico;
 	}
 	
 	

@@ -6,7 +6,7 @@ import java.util.List;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Medico {
@@ -15,14 +15,14 @@ public class Medico {
 	private String nome;
 	private String especialidade;
 	
-	@ManyToMany(cascade= {CascadeType.PERSIST, CascadeType.MERGE})
+	@OneToMany(mappedBy = "medico", cascade= {CascadeType.PERSIST, CascadeType.MERGE})
 	private List<Consulta> consultas = new ArrayList<>();
 	
 	
 	public void adicionarConsulta(Consulta c){
 		consultas.add(c);
 	}
-	public void removerLivro(Consulta c){
+	public void removerConsulta(Consulta c){
 		consultas.remove(c);
 	}
 	

@@ -1,11 +1,12 @@
 package modelo;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 
 
 @Entity
@@ -15,14 +16,14 @@ public class Paciente {
 	private String nome;
 	
 	
-	@ManyToMany(cascade= {CascadeType.PERSIST, CascadeType.MERGE})
-	private ArrayList<Consulta> consultas = new ArrayList<>();
+	@OneToMany(mappedBy = "paciente", cascade= {CascadeType.PERSIST, CascadeType.MERGE})
+	private List<Consulta> consultas = new ArrayList<>();
 	
 	
 	public void adicionarConsulta(Consulta c){
 		consultas.add(c);
 	}
-	public void removerLivro(Consulta c){
+	public void removerConsulta(Consulta c){
 		consultas.remove(c);
 	}
 	
@@ -52,7 +53,7 @@ public class Paciente {
 		this.nome = nome;
 	}
 
-	public ArrayList<Consulta> getConsultas() {
+	public List<Consulta> getConsultas() {
 		return consultas;
 	}
 
