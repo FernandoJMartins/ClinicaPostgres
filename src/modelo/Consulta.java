@@ -8,7 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToMany;;
 
 @Entity
 public class Consulta {
@@ -25,10 +25,10 @@ public class Consulta {
 		this.tipo = tipo;
 	}
 	
-	@OneToOne(mappedBy = "consulta", cascade= {CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToMany(mappedBy = "consultas", cascade= {CascadeType.PERSIST, CascadeType.MERGE})
 	public List<Medico> medicos = new ArrayList<>();
 	
-	@OneToOne(mappedBy = "consulta", cascade= {CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToMany(mappedBy = "consultas", cascade= {CascadeType.PERSIST, CascadeType.MERGE})
 	public List<Paciente> pacientes = new ArrayList<>();
 	
 	
