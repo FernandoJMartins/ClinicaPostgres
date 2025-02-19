@@ -18,65 +18,65 @@ public class Cadastrar {
 			manager = Util.conectarBanco();
 
 			System.out.println("Cadastrando...");
-//			Autor joao, maria, jose, paulo;
-			
-			// 3 de CADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUAUUAUAUA
-			Paciente paciente1;
-			Medico medico1, medico2;
-			Consulta consulta1, consulta2;
-			
-			paciente1 = new Paciente("001", "Caioooo");
-			medico1 = new Medico("Medico 1", "ABC1", "Cardiologista");
-			medico2 = new Medico("Medico 2", "ABC2", "Cardiologista");
-			
-			consulta1 = new Consulta("11/02/2000", "Plano");
-			
-			consulta2 = new Consulta("11/02/2000", "Plano");
-		
-//			maria = new Autor("000.002.002-22", "maria");
-//			jose = 	new Autor("000.003.003-33", "jose");
-//			paulo = new Autor("000.004.004-44", "paulo");
 
-			manager.getTransaction().begin();
-			Consulta c1 = new Consulta("11/02/2000", "plano");
-			c1.adicionarMedico(medico1);
-			c1.adicionarPaciente(paciente1);
-			manager.persist(c1);
-			manager.getTransaction().commit();
+			Paciente paciente1, paciente2, paciente3, paciente4, paciente5;
+			Medico medico1, medico2, medico3, medico4, medico5;
+			Consulta consulta1, consulta2, consulta3, consulta4, consulta5;
+
+            paciente1 = new Paciente("001", "Caioooo");
+            paciente2 = new Paciente("002", "Ana");
+            paciente3 = new Paciente("003", "Bruno");
+            paciente4 = new Paciente("004", "Carla");
+            paciente5 = new Paciente("005", "Diego");
+            
+			
+            medico1 = new Medico("Medico 1", "ABC1", "Cardiologista");
+            medico2 = new Medico("Medico 2", "ABC2", "Ortopedista");
+            medico3 = new Medico("Medico 3", "ABC3", "Pediatra");
+            medico4 = new Medico("Medico 4", "ABC4", "Dermatologista");
+            medico5 = new Medico("Medico 5", "ABC5", "Neurologista");
+			
+
+            manager.getTransaction().begin();
+            consulta1 = new Consulta("11/02/2000", "Plano");
+            consulta1.adicionarMedico(medico1);
+            consulta1.adicionarPaciente(paciente1);
+            manager.persist(consulta1);
+            manager.getTransaction().commit();
+
+            
+            manager.getTransaction().begin();
+            consulta2 = new Consulta("12/02/2000", "Particular");
+            consulta2.adicionarMedico(medico2);
+            consulta2.adicionarPaciente(paciente2);
+            manager.persist(consulta2);
+            manager.getTransaction().commit();
+            
+            
+            manager.getTransaction().begin();
+            consulta3 = new Consulta("13/02/2000", "Plano");
+            consulta3.adicionarMedico(medico3);
+            consulta3.adicionarPaciente(paciente3);
+            manager.persist(consulta3);
+            manager.getTransaction().commit();
+            
+            
+            manager.getTransaction().begin();
+            consulta4 = new Consulta("14/02/2000", "Particular");
+            consulta4.adicionarMedico(medico4);
+            consulta4.adicionarPaciente(paciente4);
+            manager.persist(consulta4);
+            manager.getTransaction().commit();
+
+            
+            manager.getTransaction().begin();
+            consulta5 = new Consulta("15/02/2000", "Plano");
+            consulta5.adicionarMedico(medico5);
+            consulta5.adicionarPaciente(paciente5);
+            manager.persist(consulta5);
+            manager.getTransaction().commit();
 
 			
-//			manager.getTransaction().begin();
-//			Livro c = new Livro(20202020, "c",  2015);
-//			c.adicionarAutor(joao);
-//			c.adicionarAutor(jose);
-//			joao.adicionarLivro(c);
-//			jose.adicionarLivro(c);
-//			manager.persist(c);
-//			manager.getTransaction().commit();
-
-
-//			manager.getTransaction().begin();
-//			Livro php = new Livro(30303030, "php", 2015);
-//			php.adicionarAutor(joao);
-//			php.adicionarAutor(paulo);
-//			joao.adicionarLivro(php);
-//			paulo.adicionarLivro(php);
-//			manager.persist(php);
-//			manager.getTransaction().commit();
-//
-//
-//			manager.getTransaction().begin();
-//			Livro python = new Livro(40404040, "python",  2017);
-//			python.adicionarAutor(joao);
-//			python.adicionarAutor(maria);
-//			python.adicionarAutor(jose);
-//			python.adicionarAutor(paulo);
-//			joao.adicionarLivro(python);
-//			maria.adicionarLivro(python);
-//			jose.adicionarLivro(python);
-//			paulo.adicionarLivro(python);
-//			manager.persist(python);
-//			manager.getTransaction().commit();
 
 		} catch (Exception e) {
 			System.out.println("excecao=" + e.getMessage());

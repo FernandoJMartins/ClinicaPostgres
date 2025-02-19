@@ -1,6 +1,5 @@
 package modelo;
 
-import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -30,19 +29,19 @@ public class Consulta {
 	
 	
 	public void adicionarMedico(Medico m) {
-		Medico medico = m;
+		this.medico = m;
 	}
 	
 	public void adicionarPaciente(Paciente p) {
-		Paciente paciente = p;
+		this.paciente = p;
 	}
 	
 	public void removerMedico(Medico m) {
-		Medico medico = null;
+		this.medico = null;
 	}
 	
 	public void removerPaciente(Paciente p) {
-		Paciente paciente = null;
+		this.paciente = null;
 	}
 	
 	public Paciente getPaciente(){
