@@ -24,7 +24,8 @@ public class Util {
 		if(manager == null) {
 			factory = Persistence.createEntityManagerFactory("hibernate-postgresql");
 			manager = factory.createEntityManager();
-			logger.debug("-------- conectou banco biblioteca");
+			System.out.println("conectado papai");
+			logger.debug("-------- conectou banco pob");
 		}
 		return manager;
 	}

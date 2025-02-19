@@ -38,7 +38,7 @@ public class Cadastrar {
 			
 
             manager.getTransaction().begin();
-            consulta1 = new Consulta("11/02/2000", "Plano");
+            consulta1 = new Consulta("11/02/2024 08:30", "Plano");
             consulta1.adicionarMedico(medico1);
             consulta1.adicionarPaciente(paciente1);
             manager.persist(consulta1);
@@ -46,7 +46,7 @@ public class Cadastrar {
 
             
             manager.getTransaction().begin();
-            consulta2 = new Consulta("12/02/2000", "Particular");
+            consulta2 = new Consulta("12/02/2025 13:00", "Particular");
             consulta2.adicionarMedico(medico2);
             consulta2.adicionarPaciente(paciente2);
             manager.persist(consulta2);
@@ -54,7 +54,7 @@ public class Cadastrar {
             
             
             manager.getTransaction().begin();
-            consulta3 = new Consulta("13/02/2000", "Plano");
+            consulta3 = new Consulta("13/02/2024 15:00", "Plano");
             consulta3.adicionarMedico(medico3);
             consulta3.adicionarPaciente(paciente3);
             manager.persist(consulta3);
@@ -62,7 +62,7 @@ public class Cadastrar {
             
             
             manager.getTransaction().begin();
-            consulta4 = new Consulta("14/02/2000", "Particular");
+            consulta4 = new Consulta("14/02/2025 09:00", "Particular");
             consulta4.adicionarMedico(medico4);
             consulta4.adicionarPaciente(paciente4);
             manager.persist(consulta4);
@@ -70,7 +70,7 @@ public class Cadastrar {
 
             
             manager.getTransaction().begin();
-            consulta5 = new Consulta("15/02/2000", "Plano");
+            consulta5 = new Consulta("15/02/2025 10:00", "Plano");
             consulta5.adicionarMedico(medico5);
             consulta5.adicionarPaciente(paciente5);
             manager.persist(consulta5);

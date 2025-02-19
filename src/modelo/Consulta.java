@@ -1,6 +1,9 @@
 package modelo;
 
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,13 +16,15 @@ public class Consulta {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private String data;
+	private LocalDateTime data;
 	private String tipo;
 	
 	public Consulta(String data, String tipo) {
-		this.data = data;
+		this.data = LocalDateTime.parse(data, DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
 		this.tipo = tipo;
 	}
+	
+	public Consulta() {}
 	
 	@ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE})
 	public Medico medico;
@@ -61,14 +66,6 @@ public class Consulta {
 	public void setPaciente(Paciente paciente) {
 		this.paciente = paciente;
 	}
-	
-	
-	
-	
-	
-	public Consulta() {
-		
-	}
 
 	public int getId() {
 		return id;
@@ -78,11 +75,11 @@ public class Consulta {
 		this.id = id;
 	}
 
-	public String getData() {
+	public LocalDateTime getData() {
 		return data;
 	}
 
-	public void setData(String data) {
+	public void setData(LocalDateTime  data) {
 		this.data = data;
 	}
 

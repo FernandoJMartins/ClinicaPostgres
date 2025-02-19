@@ -27,7 +27,7 @@ public class Paciente {
 		consultas.remove(c);
 	}
 	
-	
+	public Paciente(){}
 	
 	public Paciente(String cpf, String nome) {
 		this.cpf = cpf;
@@ -71,13 +71,13 @@ public class Paciente {
 
 	@Override
 	public String toString() {
-		String texto = " nome=" +  nome + ", cpf" + cpf;
+		String texto = "[nome=" +  nome + ", cpf" + cpf;
 
-		texto += "  consultas: ";
+		texto += "  ID's das consultas: ";
 		for(Consulta c : consultas)
 			texto += c.getId() + ",";
 
-		return texto;
+		return texto + "]";
 	}
 	
 	

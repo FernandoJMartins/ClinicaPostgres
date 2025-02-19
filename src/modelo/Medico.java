@@ -26,7 +26,7 @@ public class Medico {
 		consultas.remove(c);
 	}
 	
-	
+	public Medico() {}
 	
 	public Medico(String nome, String crm, String especialidade) {
 		this.nome = nome;
