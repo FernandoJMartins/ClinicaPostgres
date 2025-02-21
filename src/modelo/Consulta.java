@@ -95,8 +95,7 @@ public class Consulta {
 
 	@Override
 	public String toString() {
-		return "Consulta [id=" + id + ", data=" + data + ", paciente=" + paciente + ", medico=" + medico + ", tipo="
-				+ tipo + "]";
+		return "Consulta [id=" + id + ", data=" + data + ", " + "tipo=" + tipo + ", " + paciente + ", " + medico + "]";
 	}
 	
 }

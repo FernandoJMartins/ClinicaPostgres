@@ -71,11 +71,11 @@ public class Paciente {
 
 	@Override
 	public String toString() {
-		String texto = "[nome=" +  nome + ", cpf" + cpf;
+		String texto = "Paciente [nome=" +  nome + ", cpf=" + cpf;
 
 		texto += "  ID's das consultas: ";
 		for(Consulta c : consultas)
-			texto += c.getId() + ",";
+			texto += c.getId() + ", ";
 
 		return texto + "]";
 	}

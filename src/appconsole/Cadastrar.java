@@ -21,13 +21,13 @@ public class Cadastrar {
 
 			Paciente paciente1, paciente2, paciente3, paciente4, paciente5;
 			Medico medico1, medico2, medico3, medico4, medico5;
-			Consulta consulta1, consulta2, consulta3, consulta4, consulta5;
+			Consulta consulta1, consulta2, consulta3, consulta4, consulta5, consulta6, consulta7;
 
-            paciente1 = new Paciente("001", "Caioooo");
-            paciente2 = new Paciente("002", "Ana");
-            paciente3 = new Paciente("003", "Bruno");
-            paciente4 = new Paciente("004", "Carla");
-            paciente5 = new Paciente("005", "Diego");
+            paciente1 = new Paciente("001", "Fausto");
+            paciente2 = new Paciente("002", "Itallo");
+            paciente3 = new Paciente("003", "Fernando");
+            paciente4 = new Paciente("004", "Paulo");
+            paciente5 = new Paciente("005", "Caio");
             
 			
             medico1 = new Medico("Medico 1", "ABC1", "Cardiologista");
@@ -75,7 +75,20 @@ public class Cadastrar {
             consulta5.adicionarPaciente(paciente5);
             manager.persist(consulta5);
             manager.getTransaction().commit();
-
+            
+            manager.getTransaction().begin();
+            consulta6 = new Consulta("21/02/2025 13:00", "Plano");
+            consulta6.adicionarMedico(medico3);
+            consulta6.adicionarPaciente(paciente2);
+            manager.persist(consulta6);
+            manager.getTransaction().commit();
+            
+            manager.getTransaction().begin();
+            consulta7 = new Consulta("21/02/2025 15:50", "Particular");
+            consulta7.adicionarMedico(medico5);
+            consulta7.adicionarPaciente(paciente1);
+            manager.persist(consulta7);
+            manager.getTransaction().commit();
 			
 
 		} catch (Exception e) {

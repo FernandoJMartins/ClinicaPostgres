@@ -27,27 +27,6 @@ public class Consultar {
         	List<Medico> medicos;
         	List<Paciente> pacientes;
         	List<Consulta> consultas;
-
-            System.out.println("\nListando todos os médicos:");
-            q1 = manager.createQuery("select m from Medico m", Medico.class); 
-            medicos = q1.getResultList();
-            for (Medico m : medicos) {
-                System.out.println(m);
-            }
-
-            System.out.println("\nListando todos os pacientes:");
-            q2 = manager.createQuery("select p from Paciente p", Paciente.class);
-            pacientes = q2.getResultList();
-            for (Paciente p : pacientes) {
-                System.out.println(p);
-            }
-            
-            System.out.println("\nListando todas as consultas:");
-            q3 = manager.createQuery("select c from Consulta c", Consulta.class);
-            consultas = q3.getResultList();
-            for (Consulta c : consultas) {
-                System.out.println(c);
-            }
             
             System.out.println("\nConsultando médicos com caracteres 'Cardio':");
             q1 = manager.createQuery("select m from Medico m where m.especialidade like :e", Medico.class);
@@ -65,16 +44,21 @@ public class Consultar {
 				System.out.println(c); 
 			}
 			
-			/*
-			 * System.out.println("\nConsultando consultas de pacientes:"); for (Consulta c
-			 * : Fachada.consultarPacientes("02")) { System.out.println(c); }
-			 */
 			
-			System.out.println("\nConsultas realizadas no plano em data específica (11/02/2000):");
+			System.out.println("\nConsultando consultas de um paciente:");
+			q3 = manager.createQuery("select p.consultas from Paciente p where p.cpf = :cpf", Consulta.class);
+			q3.setParameter("cpf", "002");
+			consultas = q3.getResultList();
+			for (Consulta c: consultas) {
+				System.out.println(c); 
+			}
+			 
+			
+			System.out.println("\nConsultas realizadas no plano em data específica (11/02/2024):");
 			q3 = manager.createQuery("select c from Consulta c where c.tipo = 'Plano' "
-					+ "AND extract(day FROM c.data) = :day "
-			        + "AND extract(month FROM c.data) = :month "
-			        + "AND extract(year FROM c.data) = :year", Consulta.class);
+					+ "and extract(day from c.data) = :day "
+			        + "and extract(month from c.data) = :month "
+			        + "and extract(year from c.data) = :year", Consulta.class);
 			q3.setParameter("day", 11);
 			q3.setParameter("month", 2);
 			q3.setParameter("year", 2024);
@@ -85,7 +69,7 @@ public class Consultar {
             
 			System.out.println("\nPacientes com mais de 1 consultas:"); 
 			q2 = manager.createQuery("select p from Paciente p where size(p.consultas) > :n", Paciente.class);
-			q2.setParameter("n", "0");
+			q2.setParameter("n", "1");
 			pacientes = q2.getResultList();
 			for (Paciente p : pacientes) {
 				System.out.println(p);
@@ -109,6 +93,7 @@ public class Consultar {
         } catch (Exception e) {
             System.out.println("Erro: " + e.getMessage());
         }
+        Util.fecharBanco();
         System.out.println("\nFim do programa");
     }
 

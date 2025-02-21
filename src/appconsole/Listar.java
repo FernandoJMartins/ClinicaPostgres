@@ -5,39 +5,52 @@ package appconsole;
  * Prof. Fausto Ayres
  **********************************/
 
+import java.util.List;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import modelo.Consulta;
 import modelo.Medico;
 import modelo.Paciente;
-import regras_negocio.old.Fachada;
 
 public class Listar {
-
+	private EntityManager manager;
+	
     public Listar() {
-        try {
-            Fachada.inicializar();
+    	manager = Util.conectarBanco();
+    	try {
+        	TypedQuery<Medico> q1;
+        	TypedQuery<Paciente> q2;
+        	TypedQuery<Consulta> q3;
+        	List<Medico> medicos;
+        	List<Paciente> pacientes;
+        	List<Consulta> consultas;
 
-            // Listar médicos
-            System.out.println("*** Listagem de médicos:");
-            for (Medico m : Fachada.listarMedicos()) {
+            System.out.println("\nListando todos os médicos:");
+            q1 = manager.createQuery("select m from Medico m", Medico.class); 
+            medicos = q1.getResultList();
+            for (Medico m : medicos) {
                 System.out.println(m);
             }
 
-            // Listar pacientes
-            System.out.println("\n*** Listagem de pacientes:");
-            for (Paciente p : Fachada.listarPacientes()) {
+            System.out.println("\nListando todos os pacientes:");
+            q2 = manager.createQuery("select p from Paciente p", Paciente.class);
+            pacientes = q2.getResultList();
+            for (Paciente p : pacientes) {
                 System.out.println(p);
             }
-
-            // Listar consultas
-            System.out.println("\n*** Listagem de consultas:");
-            for (Consulta c : Fachada.listarConsultas()) {
+            
+            System.out.println("\nListando todas as consultas:");
+            q3 = manager.createQuery("select c from Consulta c", Consulta.class);
+            consultas = q3.getResultList();
+            for (Consulta c : consultas) {
                 System.out.println(c);
             }
 
         } catch (Exception e) {
             System.out.println("Erro: " + e.getMessage());
         } finally {
-            Fachada.finalizar();
+            Util.fecharBanco();
         }
     }
 
