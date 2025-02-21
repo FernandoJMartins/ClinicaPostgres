@@ -69,7 +69,7 @@ public class Consultar {
             
 			System.out.println("\nPacientes com mais de 1 consultas:"); 
 			q2 = manager.createQuery("select p from Paciente p where size(p.consultas) > :n", Paciente.class);
-			q2.setParameter("n", "1");
+			q2.setParameter("n", 1);
 			pacientes = q2.getResultList();
 			for (Paciente p : pacientes) {
 				System.out.println(p);
@@ -78,9 +78,8 @@ public class Consultar {
 			System.out.println("\nPacientes que Se Consultaram com o Medico de crm ABC1:"); 
 			q2 = manager.createQuery(
 				    "SELECT DISTINCT p FROM Paciente p " +
-				    "JOIN p.consultas c " +  
-				    "JOIN c.medico m " +     
-				    "WHERE m.crm = :crm", Paciente.class 
+				    "JOIN p.consultas c " +   
+				    "WHERE c.medico.crm = :crm", Paciente.class 
 				);
 				q2.setParameter("crm", "ABC1");
 
