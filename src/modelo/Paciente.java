@@ -19,7 +19,6 @@ public class Paciente {
 	@OneToMany(mappedBy = "paciente", cascade= {CascadeType.PERSIST, CascadeType.MERGE})
 	private List<Consulta> consultas = new ArrayList<>();
 	
-	
 	public void adicionarConsulta(Consulta c){
 		consultas.add(c);
 	}

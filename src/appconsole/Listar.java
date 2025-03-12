@@ -7,6 +7,7 @@ package appconsole;
 
 import java.util.List;
 
+import daoJpa.Util;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import modelo.Consulta;

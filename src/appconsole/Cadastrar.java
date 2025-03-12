@@ -5,6 +5,8 @@
 
 package appconsole;
 
+
+import daoJpa.Util;
 import jakarta.persistence.EntityManager;
 import modelo.Consulta;
 import modelo.Medico;

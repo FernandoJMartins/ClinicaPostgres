@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import daoJpa.Util;
 /**********************************
  * IFPB - SI
  * Persistencia de Objetos
@@ -55,17 +56,17 @@ public class Consultar {
 			 
 			
 			System.out.println("\nConsultas realizadas no plano em data específica (11/02/2024):");
-			q3 = manager.createQuery("select c from Consulta c where c.tipo = 'Plano' "
-					+ "and extract(day from c.data) = :day "
-			        + "and extract(month from c.data) = :month "
-			        + "and extract(year from c.data) = :year", Consulta.class);
-			q3.setParameter("day", 11);
-			q3.setParameter("month", 2);
-			q3.setParameter("year", 2024);
+			LocalDate dataFiltro = LocalDate.parse("11/02/2024", DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+			q3 = manager.createQuery(
+			    "SELECT c FROM Consulta c WHERE c.tipo = 'Plano' AND c.data >= :inicio AND c.data < :fim",
+			    Consulta.class
+			);
+			q3.setParameter("inicio", dataFiltro.atStartOfDay());
+			q3.setParameter("fim", dataFiltro.plusDays(1).atStartOfDay());
 			
 			consultas = q3.getResultList();
 			for (Consulta c : consultas) {
-			System.out.println(c); }
+			System.out.println(c); }																																					
             
 			System.out.println("\nPacientes com mais de 1 consultas:"); 
 			q2 = manager.createQuery("select p from Paciente p where size(p.consultas) > :n", Paciente.class);
