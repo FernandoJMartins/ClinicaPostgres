@@ -12,6 +12,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
@@ -170,8 +174,9 @@ public class TelaConsultaQuery {
 	
 	public void listagemConsultaPorData(String data) {
 		try {
-			List<Consulta> lista = Fachada.consultasDoPlanoNaData(data);
-
+			
+			List<Consulta> lista = Fachada.consultasDoPlanoNaData(LocalDate.parse(data, DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+			
 			// objeto model contem todas as linhas e colunas da tabela
 			DefaultTableModel model = new DefaultTableModel();
 			table.setModel(model);
@@ -191,8 +196,11 @@ public class TelaConsultaQuery {
 
 			table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS); // desabilita
 
-		} catch (Exception erro) {
+		}catch(DateTimeParseException erro) {
+			label.setText("Formato de data inválida. Siga este formato: dd/mm/aaaa");
+		}catch (Exception erro) {
 			label.setText(erro.getMessage());
+			
 		}
 	}
 	

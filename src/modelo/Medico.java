@@ -15,7 +15,7 @@ public class Medico {
 	private String nome;
 	private String especialidade;
 	
-	@OneToMany(mappedBy = "medico", cascade= {CascadeType.PERSIST, CascadeType.MERGE})
+	@OneToMany(mappedBy = "medico", cascade= {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval=true)
 	private List<Consulta> consultas = new ArrayList<>();
 	
 	

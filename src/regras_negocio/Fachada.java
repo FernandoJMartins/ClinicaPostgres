@@ -193,9 +193,14 @@ public class Fachada {
 			DAO.rollback();
 			throw new Exception("excluir Medico - CRM inexistente:" + crm);
 		}
-
-		daoMedico.delete(m); // apaga o MEDICO pelo CRM
+		
+		try {
+			daoMedico.delete(m); // apaga o MEDICO pelo CRM
 		DAO.commit();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public static void excluirPaciente(String cpf) throws Exception {
@@ -308,19 +313,7 @@ public class Fachada {
 		return result;
 	}
 	
-	public static List<Consulta> consultasDoPlanoNaData(String data) throws Exception{
-		//List<Consulta> result;
-	    if (data == null || data.trim().isEmpty()) {
-	        throw new IllegalArgumentException("A data não pode ser nula ou vazia.");
-	    }
-		
-		try {
-			LocalDate.parse(data, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-		} catch (DateTimeParseException e) {
-			DAO.rollback();
-			throw new Exception("formato data invalido:" + data);
-		}
-		
+	public static List<Consulta> consultasDoPlanoNaData(LocalDate data) throws Exception{
 	    return daoConsulta.readAllPlanoPorData(data);
 	}
 	

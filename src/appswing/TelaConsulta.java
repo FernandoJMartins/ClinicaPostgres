@@ -14,7 +14,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -107,8 +108,8 @@ public class TelaConsulta {
 						int id = (int) table.getValueAt(table.getSelectedRow(), 0);
 						Consulta c = Fachada.localizarConsulta(id);
 						String data = c.getData().toString();
-						String medico = c.getMedico().getCrm();
-						String paciente = c.getPaciente().getCpf();
+						String medico = c.getMedico() == null ? "" : c.getMedico().getCrm();
+						String paciente = c.getPaciente() == null ? "" : c.getPaciente().getCpf();
 						String tipo = c.getTipo();
 						
 						textField_1.setText(data);
@@ -228,12 +229,12 @@ public class TelaConsulta {
 						return;
 					}
 									
-					String data = textField_1.getText().trim();
+					LocalDateTime data = LocalDateTime.parse(textField_1.getText().trim(), DateTimeFormatter.ofPattern("dd/MM/yyyy")); 
 					String paciente = textField_2.getText().trim();
 					String medico = textField_3.getText().trim();
 					String tipo = textField_4.getText().trim();
 					
-					Fachada.criarConsulta(data,paciente,medico,tipo);
+					Fachada.criarConsulta(data, paciente,medico,tipo);
 
 					label.setText("consulta criada");
 					listagem();

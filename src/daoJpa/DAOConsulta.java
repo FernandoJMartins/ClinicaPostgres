@@ -43,15 +43,12 @@ public class DAOConsulta extends DAO<Consulta> {
 	
 	
 	
-	public List<Consulta> readAllPlanoPorData(String data) {
+	public List<Consulta> readAllPlanoPorData(LocalDate data) {
 		TypedQuery<Consulta> q;
 		q = manager.createQuery("select c from Consulta c where c.tipo = 'Plano' "
-				+ "and extract(day from c.data) = :day "
-		        + "and extract(month from c.data) = :month "
-		        + "and extract(year from c.data) = :year", Consulta.class);
-		q.setParameter("day", 11);
-		q.setParameter("month", 2);
-		q.setParameter("year", 2024);
+				+ "and c.data >= :inicio AND c.data < :fim", Consulta.class);
+		q.setParameter("inicio", data.atStartOfDay());
+		q.setParameter("fim", data.plusDays(1).atStartOfDay());
 		return q.getResultList();
 	}
 	
