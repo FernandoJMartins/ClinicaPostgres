@@ -7,8 +7,10 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name="medico20231370014")
 public class Medico {
 	@Id
 	private String crm;
