@@ -228,13 +228,7 @@ public class TelaMedico {
 					String nome = textField_1.getText().trim();
 					String crm = textField_2.getText().trim();
 					String especialidade = textField_3.getText().trim();
-					//String[] apelidos = textField_3.getText().trim().split(",");
-					//double nota = Double.parseDouble(textField_5.getText().trim());
 					Fachada.criarMedico(nome,crm, especialidade);
-//					Fachada.criarAluno(nome, nascimento,new ArrayList<>( Arrays.asList(apelidos)), nota);
-//					String numero = textField_4.getText();
-//					if (!numero.isEmpty())
-//						Fachada.criarTelefone(nome, numero);
 
 					label.setText("Medico criado");
 					listagem();

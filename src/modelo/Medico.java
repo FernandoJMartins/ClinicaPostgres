@@ -15,7 +15,7 @@ public class Medico {
 	private String nome;
 	private String especialidade;
 	
-	@OneToMany(mappedBy = "medico", cascade= {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval=true)
+	@OneToMany(mappedBy = "medico", cascade= {CascadeType.PERSIST, CascadeType.MERGE})
 	private List<Consulta> consultas = new ArrayList<>();
 	
 	
@@ -57,6 +57,14 @@ public class Medico {
 		this.especialidade = especialidade;
 	}
 
+	public List<Consulta> getConsultas() {
+		return consultas;
+	}
+	
+	public void removeConsulta(Consulta consulta) {
+		this.consultas.remove(consulta);
+	}
+	
 	@Override
 	public String toString() {
 		return "Medico [crm=" + crm + ", nome=" + nome + ", especialidade=" + especialidade + "]";

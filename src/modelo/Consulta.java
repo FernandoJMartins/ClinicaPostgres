@@ -20,19 +20,18 @@ public class Consulta {
 	private LocalDateTime data;
 	private String tipo;
 	
-	public Consulta(String data, String tipo) {
-		this.data = LocalDateTime.parse(data, DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
-		this.tipo = tipo;
-	}
-	
-	public Consulta() {}
-	
 	@ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE})
 	public Medico medico;
 	
 	@ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE})
 	public Paciente paciente;
 	
+	public Consulta(String data, String tipo) {
+		this.data = LocalDateTime.parse(data, DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+		this.tipo = tipo;
+	}
+	
+	public Consulta() {}
 	
 	public void adicionarMedico(Medico m) {
 		this.medico = m;

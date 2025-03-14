@@ -103,6 +103,7 @@ public class Fachada {
 	}
 
 	public static void criarPaciente(String cpf, String nome) throws Exception {
+		DAO.begin();
 		Paciente p = daoPaciente.read(cpf);
 		if (p != null) {
 			DAO.rollback();
@@ -116,6 +117,7 @@ public class Fachada {
 	}
 	
 	public static void criarMedico(String nome, String crm, String especialidade) throws Exception {
+		DAO.begin();
 		Medico m = daoMedico.read(crm);
 		if (m != null) {
 			DAO.rollback();
@@ -194,13 +196,20 @@ public class Fachada {
 			throw new Exception("excluir Medico - CRM inexistente:" + crm);
 		}
 		
-		try {
-			daoMedico.delete(m); // apaga o MEDICO pelo CRM
+		List<Consulta> consultas = new ArrayList<>(m.getConsultas());
+		for(Consulta c : consultas) {
+			m.getConsultas().remove(c);
+			
+	        Paciente paciente = c.getPaciente();
+	        if (paciente != null) {
+	            paciente.getConsultas().remove(c);
+	        }
+	        daoConsulta.delete(c);
+		}
+		
+		daoMedico.delete(m);
 		DAO.commit();
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
+	
 	}
 	
 	public static void excluirPaciente(String cpf) throws Exception {
@@ -211,11 +220,18 @@ public class Fachada {
 			throw new Exception("excluir Paciente - cpf inexistente:" + cpf);
 		}
 		
-		for (Consulta c : p.getConsultas()) {
-			 c.setPaciente(null);
-		 }
+		List<Consulta> consultas = new ArrayList<>(p.getConsultas());
+		for(Consulta c : consultas) {
+			p.getConsultas().remove(c);
+			
+	        Medico medico = c.getMedico();
+	        if (medico != null) {
+	            medico.getConsultas().remove(c);
+	        }
+	        daoConsulta.delete(c);
+		}
 		 
-		daoPaciente.delete(p); // apaga o PACIENTE pelo CPF ( essas duas classes poderiam ser uma classe só )
+		daoPaciente.delete(p);
 		DAO.commit();
 	}
 	

@@ -107,7 +107,7 @@ public class TelaConsulta {
 						// pegar a data, paciente, medico e tipo da consulta selecionada
 						int id = (int) table.getValueAt(table.getSelectedRow(), 0);
 						Consulta c = Fachada.localizarConsulta(id);
-						String data = c.getData().toString();
+						String data = c.getData().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
 						String medico = c.getMedico() == null ? "" : c.getMedico().getCrm();
 						String paciente = c.getPaciente() == null ? "" : c.getPaciente().getCpf();
 						String tipo = c.getTipo();
@@ -220,7 +220,7 @@ public class TelaConsulta {
 
 		button_1 = new JButton("Criar");
 		button_1.setBounds(21, 340, 62, 23);
-		button_1.setToolTipText("cadastrar novo consulta");
+		button_1.setToolTipText("cadastrar nova consulta");
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -229,7 +229,7 @@ public class TelaConsulta {
 						return;
 					}
 									
-					LocalDateTime data = LocalDateTime.parse(textField_1.getText().trim(), DateTimeFormatter.ofPattern("dd/MM/yyyy")); 
+					LocalDateTime data = LocalDateTime.parse(textField_1.getText().trim(), DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")); 
 					String paciente = textField_2.getText().trim();
 					String medico = textField_3.getText().trim();
 					String tipo = textField_4.getText().trim();
@@ -258,7 +258,7 @@ public class TelaConsulta {
 					}
 					int id = (int) table.getValueAt(table.getSelectedRow(), 0);
 
-					String data = textField_1.getText().trim();
+					String data = textField_1.getText();
 					
 					Fachada.alterarData(id,data);
 
@@ -348,7 +348,7 @@ public class TelaConsulta {
 			for (Consulta c : lista) {
 				
 
-				model.addRow(new Object[] { c.getId(),c.getData(), c.getPaciente(), c.getMedico(),c.getTipo() });
+				model.addRow(new Object[] { c.getId(),c.getData().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")), c.getPaciente(), c.getMedico(),c.getTipo() });
 
 			}
 			
